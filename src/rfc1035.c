@@ -1180,8 +1180,8 @@ int add_resource_record(struct dns_header *header, char *limit, int *truncp, int
   va_end(ap);	/* clean up variable argument pointer */
   
   j = p - sav - 2;
- /* this has already been checked against limit before */
- PUTSHORT(j, sav);     /* Now, store real RDLength */
+  /* this has already been checked against limit before */
+  PUTSHORT(j, sav);     /* Now, store real RDLength */
   
   /* check for overflow of buffer */
   if (limit && ((unsigned char *)limit - p) < 0)
@@ -1241,6 +1241,8 @@ size_t answer_request(struct dns_header *header, char *limit, size_t qlen,
   int nxdomain = 0, auth = 1, trunc = 0, sec_data = 1;
   struct mx_srv_record *rec;
   size_t len;
+  // Make sure we do not underflow here too.
+  if (qlen > (limit - ((char *)header))) return 0;
   
   if (ntohs(header->ancount) != 0 ||
       ntohs(header->nscount) != 0 ||
