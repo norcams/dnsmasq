@@ -63,6 +63,8 @@ struct myoption {
 
 #define OPTSTRING "951yZDNLERKzowefnbvhdkqr:m:p:c:l:s:i:t:u:g:a:x:S:C:A:T:H:Q:I:B:F:G:O:M:X:V:U:j:P:J:W:Y:2:4:6:7:8:0:3:"
 
+#define OPTBUFF 4096
+
 /* options which don't have a one-char version */
 #define LOPT_RELOAD        256
 #define LOPT_NO_NAMES      257
@@ -4491,7 +4493,7 @@ void reread_dhcp(void)
     
 void read_opts(int argc, char **argv, char *compile_opts)
 {
-  char *buff = opt_malloc(MAXDNAME);
+  char *buff = opt_malloc(OPTBUFF);
   int option, conffile_opt = '7', testmode = 0;
   char *arg, *conffile = CONFFILE;
       
