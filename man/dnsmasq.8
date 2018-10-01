@@ -203,12 +203,14 @@ or
 options are given dnsmasq listens on all available interfaces except any
 given in
 .B \--except-interface
-options. IP alias interfaces (eg "eth1:0") cannot be used with
-.B --interface
+options. IP alias interface names (eg "eth1:0") can be used only in
+.B \--bind-interfaces
 or
-.B --except-interface
-options, use --listen-address instead. A simple wildcard, consisting
-of a trailing '*', can be used in 
+.B \--bind-dynamic
+mode. Use
+.B \--listen-address
+in the default mode instead. A simple wildcard, consisting of a trailing '*',
+can be used in
 .B \--interface 
 and
 .B \--except-interface
