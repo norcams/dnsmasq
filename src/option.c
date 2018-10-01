@@ -4063,7 +4063,7 @@ static void read_file(char *file, FILE *f, int hard_opt)
     {
       int white, i;
       volatile int option = (hard_opt == LOPT_REV_SERV) ? 0 : hard_opt;
-      char *errmess, *p, *arg = NULL, *start;
+      char *errmess, *p, *arg, *start;
       size_t len;
 
       /* Memory allocation failure longjmps here if mem_recover == 1 */ 
@@ -4074,6 +4074,7 @@ static void read_file(char *file, FILE *f, int hard_opt)
 	  mem_recover = 1;
 	}
       
+      arg = NULL;
       lineno++;
       errmess = NULL;
       
