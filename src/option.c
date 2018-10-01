@@ -61,7 +61,6 @@ struct myoption {
 };
 #endif
 
-#define OPTBUFF 4096
 #define OPTSTRING "951yZDNLERKzowefnbvhdkqr:m:p:c:l:s:i:t:u:g:a:x:S:C:A:T:H:Q:I:B:F:G:O:M:X:V:U:j:P:J:W:Y:2:4:6:7:8:0:3:"
 
 /* options which don't have a one-char version */
@@ -4060,7 +4059,7 @@ static void read_file(char *file, FILE *f, int hard_opt)
   volatile int lineno = 0;
   char *buff = daemon->namebuff;
   
-  while (fgets(buff, OPTBUFF, f))
+  while (fgets(buff, MAXDNAME, f))
     {
       int white, i;
       volatile int option = (hard_opt == LOPT_REV_SERV) ? 0 : hard_opt;
@@ -4485,7 +4484,7 @@ void reread_dhcp(void)
     
 void read_opts(int argc, char **argv, char *compile_opts)
 {
-  char *buff = opt_malloc(OPTBUFF);
+  char *buff = opt_malloc(MAXDNAME);
   int option, conffile_opt = '7', testmode = 0;
   char *arg, *conffile = CONFFILE;
       
@@ -4552,8 +4551,8 @@ void read_opts(int argc, char **argv, char *compile_opts)
       /* Copy optarg so that argv doesn't get changed */
       if (optarg)
 	{
-	  strncpy(buff, optarg, OPTBUFF);
-	  buff[OPTBUFF-1] = 0;
+	  strncpy(buff, optarg, MAXDNAME);
+	  buff[MAXDNAME-1] = 0;
 	  arg = buff;
 	}
       else
@@ -4668,7 +4667,7 @@ void read_opts(int argc, char **argv, char *compile_opts)
     {
       struct mx_srv_record *mx;
       
-      if (gethostname(buff, OPTBUFF) == -1)
+      if (gethostname(buff, MAXDNAME) == -1)
 	die(_("cannot get host-name: %s"), NULL, EC_MISC);
       
       for (mx = daemon->mxnames; mx; mx = mx->next)
@@ -4712,7 +4711,7 @@ void read_opts(int argc, char **argv, char *compile_opts)
       if (!(f = fopen((daemon->resolv_files)->name, "r")))
 	die(_("failed to read %s: %s"), (daemon->resolv_files)->name, EC_FILE);
       
-      while ((line = fgets(buff, OPTBUFF, f)))
+      while ((line = fgets(buff, MAXDNAME, f)))
 	{
 	  char *token = strtok(line, " \t\n\r");
 	  
