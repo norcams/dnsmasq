@@ -246,7 +246,7 @@ void dhcp_packet(time_t now, int pxe_fd)
 	      }
 	    else 
 	      {
-		strncpy(ifr.ifr_name,  bridge->iface, IF_NAMESIZE);
+		strncpy(ifr.ifr_name,  bridge->iface, IF_NAMESIZE-1);
 		break;
 	      }
 	  }
@@ -270,7 +270,7 @@ void dhcp_packet(time_t now, int pxe_fd)
       is_relay_reply = 1; 
       iov.iov_len = sz;
 #ifdef HAVE_LINUX_NETWORK
-      strncpy(arp_req.arp_dev, ifr.ifr_name, 16);
+      strncpy(arp_req.arp_dev, ifr.ifr_name, IF_NAMESIZE-1);
 #endif 
     }
   else
